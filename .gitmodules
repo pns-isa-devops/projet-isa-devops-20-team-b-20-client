@@ -1,0 +1,9 @@
+[submodule "projet-isa-devops-20-team-b-20-client-office"]
+	path = projet-isa-devops-20-team-b-20-client-office
+	url = https://github.com/pns-isa-devops/projet-isa-devops-20-team-b-20-client-office.git
+[submodule "projet-isa-devops-20-team-b-20-client-warehouse"]
+	path = projet-isa-devops-20-team-b-20-client-warehouse
+	url = https://github.com/pns-isa-devops/projet-isa-devops-20-team-b-20-client-warehouse.git
+[submodule "projet-isa-devops-20-team-b-20-client-utils"]
+	path = projet-isa-devops-20-team-b-20-client-utils
+	url = https://github.com/pns-isa-devops/projet-isa-devops-20-team-b-20-client-utils.git

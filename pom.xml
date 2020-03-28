@@ -21,6 +21,19 @@
         <cxf.version>3.1.10</cxf.version>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>central</id>
+            <name>otakedev-releases</name>
+            <url>https://artifactory.otakedev.com:443/artifactory/libs-release-local</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>otakedev-snapshots</name>
+            <url>https://artifactory.otakedev.com:443/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

@@ -12,6 +12,7 @@
         <module>projet-isa-devops-20-team-b-20-client-office</module>
         <module>projet-isa-devops-20-team-b-20-client-utils</module>
         <module>projet-isa-devops-20-team-b-20-client-warehouse</module>
+        <module>integration-tests</module>
     </modules>
 
     <properties>

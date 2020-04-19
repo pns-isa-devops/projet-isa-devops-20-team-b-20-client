@@ -1,53 +1,75 @@
 package integration;
 
+import java.util.Arrays;
+
 import client.office.api.DeliveryScheduleAPI;
+import client.office.cli.commands.Scheduledelivery;
 import client.office.framework.ShellOffice;
 import client.utils.cli.commands.Command;
 import client.utils.cli.framework.Shell;
 import client.warehouse.api.DeliveryAPI;
 import client.warehouse.api.DroneMaintenanceAPI;
 import client.warehouse.cli.commands.Adddrone;
+import client.warehouse.cli.commands.Checkfornewparcels;
+import client.warehouse.cli.commands.Startdelivery;
 import client.warehouse.framework.ShellWarehouse;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import utils.StreamCatcher;
 
 public class schedule_and_make_a_delivery {
+
+    private StreamCatcher sc = new StreamCatcher();
+
     private static String host = "localhost";
     private static String port = "8080";
 
     Shell shellOffice;
     Shell shellWarehouse;
 
+    String parcelId;
+
     public void setup() throws IllegalAccessException, InstantiationException {
+        sc.setUpStreams();
         shellOffice = new ShellOffice(new DeliveryScheduleAPI(host, port));
         shellWarehouse = new ShellWarehouse(new DeliveryAPI(host, port), new DroneMaintenanceAPI(host, port));
     }
 
-    @Given("a drone {string} added in the system")
-    public void a_drone_is_added_in_the_system(String id) throws IllegalAccessException, InstantiationException {
+    @Given("a drone is added in the system")
+    public void a_drone_is_added_in_the_system() throws IllegalAccessException, InstantiationException {
         setup();
         Command c = new Adddrone();
         c.setShell(shellWarehouse);
         c.execute(null);
+        sc.out().equals("Drone added to warehouse.");
     }
 
     @Given("a parcel {string}")
-    public void a_parcel(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void a_parcel(String parcelId) {
+        Command c = new Checkfornewparcels();
+        c.setShell(shellWarehouse);
+        c.execute(null);
+        sc.out().contains(parcelId).contains("Parcels updated").clean();
+        this.parcelId = parcelId;
     }
 
     @When("I schedule a delivery at {string}")
-    public void i_schedule_a_delivery_at(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void i_schedule_a_delivery_at(String time) {
+        Command c = new Scheduledelivery();
+        c.setShell(shellOffice);
+        // delivery has same id as parcel
+        c.execute(Arrays.asList(parcelId, time));
+        sc.out().equals("Delivery scheduled!");
     }
 
     @Then("I can start the delivery")
     public void i_can_start_the_delivery() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        Command c = new Startdelivery();
+        c.setShell(shellWarehouse);
+        c.execute(Arrays.asList(parcelId));
+        sc.out().equals("Drone launched!");
+        sc.restoreStreams();
     }
 
 }

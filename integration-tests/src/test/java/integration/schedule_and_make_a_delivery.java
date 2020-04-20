@@ -60,7 +60,7 @@ public class schedule_and_make_a_delivery {
         c.setShell(shellOffice);
         // delivery has same id as parcel
         c.execute(Arrays.asList(parcelId, time));
-        sc.out().equals("Delivery scheduled!");
+        sc.out().equals("Scheduling delivery : 10:30 for 123456789A\nDelivery scheduled!");
     }
 
     @Then("I can start the delivery")
@@ -68,7 +68,7 @@ public class schedule_and_make_a_delivery {
         Command c = new Startdelivery();
         c.setShell(shellWarehouse);
         c.execute(Arrays.asList(parcelId));
-        sc.out().equals("Drone launched!");
+        sc.out().equals("Starting drone : 123456789A.\nDrone launched!");
         sc.restoreStreams();
     }
 

@@ -53,6 +53,8 @@ public class StreamCatcher {
      * </pre>
      *
      *
+     * Assertion Error if the condition is not validated
+     *
      * The buffer will be Automatically cleaned on the corresponding stream after
      * the process
      *
@@ -78,6 +80,8 @@ public class StreamCatcher {
      * //the same as all() if first call
      * streamCatcher.notEquals("a string")
      * </pre>
+     *
+     * Assertion Error if the condition is not validated
      *
      * The buffer will be Automatically cleaned on the corresponding stream after
      * the process
@@ -105,6 +109,8 @@ public class StreamCatcher {
      * //the same as all() if first call
      * streamCatcher.contains("a string").clean()
      * </pre>
+     *
+     * Assertion Error if the condition is not validated
      *
      * The buffer will not be cleaned on the corresponding stream after the process
      * You need to do it manually ending with <code>clean()</code>
@@ -137,6 +143,8 @@ public class StreamCatcher {
      *
      * The buffer will not be cleaned on the corresponding stream after the process
      * You need to do it manually ending with <code>clean()</code>
+     *
+     * Assertion Error if the condition is not validated
      *
      * @param string
      */

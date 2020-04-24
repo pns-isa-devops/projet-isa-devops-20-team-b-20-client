@@ -1,6 +1,7 @@
 package integration;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import client.office.api.DeliveryScheduleAPI;
 import client.office.cli.commands.Scheduledelivery;
@@ -36,12 +37,12 @@ public class schedule_and_make_a_delivery {
         shellWarehouse = new ShellWarehouse(new DeliveryAPI(host, port), new DroneMaintenanceAPI(host, port));
     }
 
-    @Given("a drone is added in the system")
-    public void a_drone_is_added_in_the_system() throws IllegalAccessException, InstantiationException {
+    @Given("a drone {string} is added in the system")
+    public void a_drone_is_added_in_the_system(String droneID) throws IllegalAccessException, InstantiationException {
         setup();
         Command c = new Adddrone();
         c.setShell(shellWarehouse);
-        c.execute(null);
+        c.execute(Collections.singletonList(droneID));
         sc.out().equals("Drone added to warehouse.");
     }
 

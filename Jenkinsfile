@@ -9,6 +9,7 @@ pipeline{
     }
     stages {
         stage("Deploy") {
+            when { expression { BRANCH_NAME ==~ /(master|develop)/ }}
             steps {
                 configFileProvider([configFile(fileId: MVN_SETTING_PROVIDER, variable: "MAVEN_SETTINGS")]) {
                     echo "Deploy module"

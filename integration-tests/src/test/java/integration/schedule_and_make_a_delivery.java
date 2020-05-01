@@ -23,15 +23,20 @@ public class schedule_and_make_a_delivery {
 
     private StreamCatcher sc = new StreamCatcher();
 
-    private static String host = "localhost";
-    private static String port = "8080";
-
     Shell shellOffice;
     Shell shellWarehouse;
 
     String parcelId;
 
     public void setup() throws IllegalAccessException, InstantiationException {
+        String host = System.getenv("HOST");
+        String port = System.getenv("PORT");
+        if (host == null) {
+            host = "localhost";
+        }
+        if (port == null) {
+            port = "8080";
+        }
         sc.setUpStreams();
         shellOffice = new ShellOffice(new DeliveryScheduleAPI(host, port));
         shellWarehouse = new ShellWarehouse(new DeliveryAPI(host, port), new DroneMaintenanceAPI(host, port));

@@ -1,3 +1,7 @@
+#!/bin/bash
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+cd "$parent_path"
+
 echo "# Retrieving the new WSDL file from the web service"
 echo ""
 echo "Source project : "

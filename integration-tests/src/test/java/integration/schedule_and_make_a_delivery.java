@@ -66,8 +66,8 @@ public class schedule_and_make_a_delivery {
         Command c = new Scheduledelivery();
         c.setShell(shellOffice);
         // delivery has same id as parcel
-        c.execute(Arrays.asList(parcelId, time));
-        sc.out().equals("Scheduling delivery : 10:30 for 123456789A\nDelivery scheduled!");
+        c.execute(Arrays.asList(time, parcelId));
+        sc.out().equals("Scheduling delivery : " + parcelId + " for " + time + "\nDelivery scheduled!");
     }
 
     @Then("I can start the delivery")

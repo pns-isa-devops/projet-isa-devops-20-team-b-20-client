@@ -26,8 +26,9 @@ cp ../../../../../projet-isa-devops-20-team-b-20-drone-delivery/projet-isa-devop
 echo "Retrieved DeliveryScheduleWS"
 cp ../../../../../projet-isa-devops-20-team-b-20-drone-delivery/projet-isa-devops-20-team-b-20-web-service/src/main/resources/wsdl/InvoiceWS.wsdl .
 echo "Retrieved InvoiceWS"
-cd ../../../
+cd ../../../../
 echo ""
 echo "update stubs"
-mvn package
+mvn package -pl projet-isa-devops-20-team-b-20-client-warehouse
+mvn package -pl projet-isa-devops-20-team-b-20-client-office
 echo "## Done"

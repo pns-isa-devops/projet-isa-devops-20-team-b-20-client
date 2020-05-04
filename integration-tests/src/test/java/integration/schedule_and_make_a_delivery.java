@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import client.office.api.DeliveryScheduleAPI;
 import client.office.api.InvoiceAPI;
+import client.office.api.AnalyticsAPI;
 import client.office.cli.commands.Scheduledelivery;
 import client.office.framework.ShellOffice;
 import client.utils.cli.commands.Command;
@@ -39,7 +40,7 @@ public class schedule_and_make_a_delivery {
             port = "8080";
         }
         sc.setUpStreams();
-        shellOffice = new ShellOffice(new DeliveryScheduleAPI(host, port), new InvoiceAPI(host, port));
+        shellOffice = new ShellOffice(new DeliveryScheduleAPI(host, port), new AnalyticsAPI(host, port), new InvoiceAPI(host, port));
         shellWarehouse = new ShellWarehouse(new DeliveryAPI(host, port), new DroneMaintenanceAPI(host, port));
     }
 

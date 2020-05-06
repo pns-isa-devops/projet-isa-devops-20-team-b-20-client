@@ -26,6 +26,8 @@ cp ../../../../../projet-isa-devops-20-team-b-20-drone-delivery/projet-isa-devop
 echo "Retrieved DeliveryScheduleWS"
 cp ../../../../../projet-isa-devops-20-team-b-20-drone-delivery/projet-isa-devops-20-team-b-20-web-service/src/main/resources/wsdl/InvoiceWS.wsdl .
 echo "Retrieved InvoiceWS"
+cp ../../../../../projet-isa-devops-20-team-b-20-drone-delivery/projet-isa-devops-20-team-b-20-web-service/src/main/resources/wsdl/AnalyticsWS.wsdl .
+echo "Retrieved AnalyticsWS"
 cd ../../../../
 echo ""
 echo "update stubs"

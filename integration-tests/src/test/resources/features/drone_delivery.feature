@@ -4,11 +4,10 @@ Feature: All the process from adding drones to the warehouse to scheduling an or
     Given a warehouse client
     And an office client
     And the warehouse that received new parcels from carriers that indicated in an API what parcels have been delivered
-    And a deliveries
+    And deliveries
+    And a drone with ID 001 that flew 19 hours
 
   Scenario: Adding parcels, adding drones, scheduling deliveries, sending deliveries, charging and reviewing the drone,viewing statistics and viewing an invoice
-    When Marcel adds a new drone with the ID 001 to the warehouse
-    Then a new drone with the ID 001 is now available in the warehouse
 
     When Marcel tells the system to fetch the newly arrived parcels from the carrier API to add them to the database
     Then the system possesses new deliveries for each parcel received
@@ -20,11 +19,13 @@ Feature: All the process from adding drones to the warehouse to scheduling an or
     When Clissandre fills the drone 001 schedule with deliveries and she tries to add a new delivery to the schedule
     Then the system indicates that there is no more time slot available for every time slot
 
-    When Marcel adds a new drone 002 in the system and Clissandre plans a delivery at 10:00am
+    When Marcel adds a new drone 002 in the system
+    Then a new drone with the ID 002 is now available in the warehouse
+    When Clissandre plans a delivery at 10:00am
     Then a new delivery is added at 10am with the drone 002
 
-    When at 10:10 Marcel looks at his screen to have the references of the next parcel to load which is the delivery D1 that must leave at 10:15 with the drone 001
-    Then the screen displays the parcel the delivery D1, 8:30 and the drone 001
+    When at 7:50 Marcel looks at his screen to have the references of the next parcel to load which is the delivery D1 that must leave at 8:00 with the drone 001
+    Then the screen displays the parcel the delivery D1, the hour 8:00 and the drone 001
     When Marcel loads the drone with the corresponding parcel and presses the button that initiates the delivery process
     Then the drone receives the launch signal with the corresponding parcel
     And the address to head to
@@ -35,23 +36,29 @@ Feature: All the process from adding drones to the warehouse to scheduling an or
     When the drone 001 is back
     Then the status of the delivery is not ONGOING anymore
     And the drone status is AVAILABLE
-    And the flight time of the drone is updated to 15 minutes
+    And the flight time of the drone is updated to 19 hours and 15 minutes
 
-    When Charlene retrieves the drone 001 and puts it in charge
-    Then
+    When Marcel launches 2 more deliveries
+    Then the flight time of the drone is now 19 hours and 45 minutes
 
+    When Charlene retrieves the drone 001 and puts it in charge for 3 hours as it flew 45 minutes today
+    Then the drone status is now ON_CHARGE
 
-## Scénario à suivre :
-#
-#
-#  Quand Charlène récupère le drone 001 à son retour et qu’elle le met en charge, alors le statut du drone est maintenant EN CHARGE.
-#
-#  Quand, à hh (juste avant une révision) Marcel initialise une nouvelle livraison avec le drone 001 et que le drone revient, Charlène le récupère et l’emmène à Garfield pour révision, alors le statut du drone est maintenant en révision.
-#
-#  Quand Garfield a fini de réviser le drone, il l’emmène à Marcel qui met son état à AVAILABLE, alors l’état du drone est maintenant AVAILABLE.
-#
-#  Quand Bob, souhaite avoir le taux d’occupation du drone 001, alors il obtient le taux d’occupation du drone 001 qui est de 15%.
-#
-#  Quand Bob, souhaite avoir le taux d’occupation du drone 002, alors il obtient le taux d’occupation du drone 002 qui est de 0% puisqu’il n’a jamais été lancé.
-#
-#  Quand Gisèle demande à voir les factures à la fin de la journée, alors elle obtient la facture qui contient les informations du transporteur qui a livré les colis ce matin et les informations des colis reçus (comparer chaque livraison dans la facture avec les colis reçus).
+    When at 11h45 Marcel initiates a new delivery with the drone 001 that flew 19 hours and 45 minutes and the drone comes back
+    Then the drone has now 20 hours of flight
+    When Charlene retrieves it and brings it to Garfield for review
+    Then the drone is now ON_REVIEW
+    And its flight time is now reinitialized to 0
+    When Garfield finished revising the drone and brings it to Marcel
+    Then the state of the drone is now AVAILABLE
+
+    When Bob retrieves the occupation rate of the drone 001
+    Then he obtains an occupation rate of XX% as the drone flew 4 times, was 3 hours n review and was put one time in charge
+
+    When Bob retrieves the occupation rate of the drone 002
+    Then he obtains an occupation rate of 0% as the drone never flew
+
+    When Gisele asks the system to see the invoices at the end of the day
+    Then she obtains the invoice containing the information of the carrier who delivered parcel in the morning
+    And every deliveries received in the morning with this carrier
+    And a price of of 90 (30 + 10 * 6)

@@ -3,23 +3,31 @@ Feature: All the process from adding drones to the warehouse to scheduling an or
   Background:
     Given a warehouse client
     And an office client
+    And the warehouse that received new parcels from carriers that indicated in an API what parcels have been delivered
+    And a deliveries
 
   Scenario: Adding parcels, adding drones, scheduling deliveries, sending deliveries, charging and reviewing the drone,viewing statistics and viewing an invoice
     When Marcel adds a new drone with the ID 001 to the warehouse
     Then a new drone with the ID 001 is now available in the warehouse
 
+    When Marcel tells the system to fetch the newly arrived parcels from the carrier API to add them to the database
+    Then the system possesses new deliveries for each parcel received
+    And a new invoice is created with the delivery and the carrier information
 
-### Scénario à suivre :
-#
-#  Un nouveau drone est reçu par l’entrepôt, quand Marcel l’ajoute au système avec un ID 001 alors un nouveau drone d’ID 001 est disponible dans le système.
-#
-#  Quand Marcel reçoit les nouveaux colis dans l’entrepôt et les ajoutes avec toutes leurs informations dans le système puis les range dans l’entrepôt alors le système possède de nouvelles livraisons qui ont les informations des colis et une nouvelle facture est créée avec les informations de la livraison et du transporteur.
-#
-#  Quand le client appelle Clissandre pour prévoir un horaire de livraison à 14h et que Clissandre prévoit le créneau dans le planning alors un nouveau créneau de livraison est dans le planning à 14h avec le drone 001.
-#
-#  Quand Clissandre a rempli le planning du drone 001 avec des livraisons et quand elle essaye d’ajouter une nouvelle livraison sur chacun des créneaux, alors le système lui indique qu’il n’est pas possible de planifier des livraisons pour chaque créneau de la journée car aucun drone n’est disponible.
-#
-#  Quand Marcel ajoute un nouveau drone 002 dans le système, et que Clissandre réessaye de planifier une livraison à 15h, alors un nouveau créneau de livraison est créé sur le drone 002 à 15h.
+    When a customer calls Clissandre to plan a delivery at 14pm
+    Then a new time slot is created in the planning at 14pm with the drone 001
+
+    When Clissandre fills the drone 001 schedule with deliveries and she tries to add a new delivery to the schedule
+    Then the system indicates that there is no more time slot available for every time slot
+
+    When Marcel adds a new drone 002 in the system and Clissandre plans a delivery at 10:00am
+    Then a new delivery is added at 10am with the drone 002
+
+    When at 10:10 Marcel looks at his screen to have the references of the next parcel to load which is the delivery D1 that must arrive at 10
+    Then the screen displays the parcel
+
+
+## Scénario à suivre :
 #
 #  Quand, à -10h15-(juste avant une charge), Marcel regarde son écran pour avoir les références du prochain colis à charger (la livraison d’ID L1 doit partir à 14h avec un colis d’id A8 et avec le drone 001 à l’adresse instant travel) et que Marcel attache le bon colis à ce drone puis et appuie sur le bouton Initialiser pour que le système envoie le signal de lancement au drone au bon moment alors la livraison est initialisée. Le drone et la livraison ont le statut En cours de livraison.
 #

@@ -23,15 +23,26 @@ Feature: All the process from adding drones to the warehouse to scheduling an or
     When Marcel adds a new drone 002 in the system and Clissandre plans a delivery at 10:00am
     Then a new delivery is added at 10am with the drone 002
 
-    When at 10:10 Marcel looks at his screen to have the references of the next parcel to load which is the delivery D1 that must arrive at 10
-    Then the screen displays the parcel
+    When at 10:10 Marcel looks at his screen to have the references of the next parcel to load which is the delivery D1 that must leave at 10:15 with the drone 001
+    Then the screen displays the parcel the delivery D1, 8:30 and the drone 001
+    When Marcel loads the drone with the corresponding parcel and presses the button that initiates the delivery process
+    Then the drone receives the launch signal with the corresponding parcel
+    And the address to head to
+    And the hour at which he must leave
+    And the state of the drone changes to ON_DELIVERY
+    And the state of the delivery changes to ONGOING
+
+    When the drone 001 is back
+    Then the status of the delivery is not ONGOING anymore
+    And the drone status is AVAILABLE
+    And the flight time of the drone is updated to 15 minutes
+
+    When Charlene retrieves the drone 001 and puts it in charge
+    Then
 
 
 ## Scénario à suivre :
 #
-#  Quand, à -10h15-(juste avant une charge), Marcel regarde son écran pour avoir les références du prochain colis à charger (la livraison d’ID L1 doit partir à 14h avec un colis d’id A8 et avec le drone 001 à l’adresse instant travel) et que Marcel attache le bon colis à ce drone puis et appuie sur le bouton Initialiser pour que le système envoie le signal de lancement au drone au bon moment alors la livraison est initialisée. Le drone et la livraison ont le statut En cours de livraison.
-#
-#  Quand le drone 001 est revenu, alors le statut de la livraison n’est plus ONGOING mais soit FAILED, NOT DELIVERED, DELIVERED.
 #
 #  Quand Charlène récupère le drone 001 à son retour et qu’elle le met en charge, alors le statut du drone est maintenant EN CHARGE.
 #

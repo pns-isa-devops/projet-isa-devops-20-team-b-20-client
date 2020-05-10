@@ -42,7 +42,8 @@ public class schedule_and_make_a_delivery {
             port = "8080";
         }
         sc.setUpStreams();
-        shellOffice = new ShellOffice(new DeliveryScheduleAPI(host, port), new AnalyticsAPI(host, port), new InvoiceAPI(host, port));
+        shellOffice = new ShellOffice(new DeliveryScheduleAPI(host, port), new AnalyticsAPI(host, port),
+                new InvoiceAPI(host, port));
         shellWarehouse = new ShellWarehouse(new DeliveryAPI(host, port), new DroneMaintenanceAPI(host, port));
     }
 
@@ -78,7 +79,7 @@ public class schedule_and_make_a_delivery {
         Command c = new Startdelivery();
         c.setShell(shellWarehouse);
         c.execute(Arrays.asList(parcelId));
-        sc.out().equals("Starting delivery : 123456789A.\nDrone 000 launched!");
+        sc.out().contains("123456789A").contains("Drone 000 launched!").clean();
         sc.restoreStreams();
     }
 

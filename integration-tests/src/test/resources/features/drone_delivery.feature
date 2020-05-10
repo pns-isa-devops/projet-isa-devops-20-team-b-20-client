@@ -94,11 +94,11 @@ Feature: All the process from adding drones to the warehouse to scheduling an or
     Then the client displays "The drone 001 is not available. It is currently on review."
 
     When Garfield finished revising the drone "001" and brings it to Marcel and Marcel puts it available
-    Then the client displays "Drone 000 is AVAILABLE"
+    Then the client displays "Drone 001 is AVAILABLE"
 
     When Bob retrieves the occupation rate of the drone "001"
     # occupancy rate
-    Then he obtains an occupation rate of "0.5" % as the drone flew 4 times, was 3 hours in review and was put one time in charge
+    Then he obtains an occupation rate of "0.925" % as the drone flew 4 times, was 3 hours in review and was put one time in charge
 
     When Bob retrieves the occupation rate of the drone "002"
     Then he obtains an occupation rate of 0% as the drone never flew

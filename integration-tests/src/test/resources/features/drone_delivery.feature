@@ -9,27 +9,27 @@ Feature: All the process from adding drones to the warehouse to scheduling an or
 
     When Marcel tells the system to fetch the newly arrived parcels from the carrier API to add them to the database
     Then the system possesses new deliveries for each parcel received :
-      | "123456789A" |
-      | "123456789B" |
-      | "123456789C" |
-      | "123456789D" |
-      | "123456789E" |
-      | "123456789F" |
-      | "123456789G" |
-      | "123456789H" |
-      | "123456789I" |
-      | "123456789J" |
-      | "123456789K" |
-      | "123456789L" |
-      | "123456789M" |
-      | "123456789N" |
-      | "123456789O" |
-      | "123456789P" |
-      | "123456789Q" |
-      | "123456789R" |
-      | "123456789S" |
-      | "123456789T" |
-      | "123456789U" |
+      | 123456789A |
+      | 123456789B |
+      | 123456789C |
+      | 123456789D |
+      | 123456789E |
+      | 123456789F |
+      | 123456789G |
+      | 123456789H |
+      | 123456789I |
+      | 123456789J |
+      | 123456789K |
+      | 123456789L |
+      | 123456789M |
+      | 123456789N |
+      | 123456789O |
+      | 123456789P |
+      | 123456789Q |
+      | 123456789R |
+      | 123456789S |
+      | 123456789T |
+      | 123456789U |
 
     When Clissandre schedules "123456789A" a at "8:00"
     Then the client returns "Delivery scheduled!"
@@ -37,23 +37,23 @@ Feature: All the process from adding drones to the warehouse to scheduling an or
     Then a new time slot has been created in the planning at 8:00 with the drone 001 "[8:0] DELIVERY"
 
     When Clissandre fills the drone 001 schedule with deliveries:
-      | "123456789B" | "8:15" |
-      | "123456789C" | "8:30" |
-      | "123456789D" | "9:45" |
-      | "123456789E" | "10:0" |
-      | "123456789F" | "10:15" |
-      | "123456789G" | "11:30" |
-      | "123456789H" | "11:45" |
-      | "123456789I" | "12:0" |
-      | "123456789L" | "13:15" |
-      | "123456789M" | "13:30" |
-      | "123456789N" | "13:45" |
-      | "123456789O" | "15:0" |
-      | "123456789P" | "15:15" |
-      | "123456789Q" | "15:30" |
-      | "123456789R" | "16:45" |
-      | "123456789S" | "17:0" |
-      | "123456789T" | "17:15" |
+      | 123456789B |  8:15 |
+      | 123456789C |  8:30 |
+      | 123456789D |  9:45 |
+      | 123456789E |  10:0 |
+      | 123456789F |  10:15 |
+      | 123456789G |  11:30 |
+      | 123456789H |  11:45 |
+      | 123456789I |  12:0 |
+      | 123456789L |  13:15 |
+      | 123456789M |  13:30 |
+      | 123456789N |  13:45 |
+      | 123456789O |  15:0 |
+      | 123456789P |  15:15 |
+      | 123456789Q |  15:30 |
+      | 123456789R |  16:45 |
+      | 123456789S |  17:0 |
+      | 123456789T |  17:15 |
     Then the planning does not contain "AVAILABLE" time slots
 
     When Clissandre tries to schedule a delivery "123456789U" at "12:0"
@@ -103,7 +103,8 @@ Feature: All the process from adding drones to the warehouse to scheduling an or
     When Gisele asks the system to see the invoices at the end of the day
     Then she obtains the invoice containing the information of the carrier ....
     And every deliveries received in the morning with this carrier
-    And a price of of 90.0 HT (30 + 10 * 6)
+    # (30 + 10 * 6)
+    And a price of of 90.0 HT
     And a price of 108.0 TTC
 
     When Gisele marks the invoice as paid

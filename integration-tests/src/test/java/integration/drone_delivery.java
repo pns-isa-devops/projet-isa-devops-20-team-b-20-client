@@ -10,15 +10,22 @@ import client.warehouse.api.DeliveryAPI;
 import client.warehouse.api.DroneMaintenanceAPI;
 import client.warehouse.cli.commands.Adddrone;
 import client.warehouse.cli.commands.Checkfornewparcels;
+import client.warehouse.cli.commands.Getnextdelivery;
 import client.warehouse.framework.ShellWarehouse;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import stubs.delivery.Delivery;
+import stubs.delivery.Parcel;
 import utils.StreamCatcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class drone_delivery {
 
@@ -70,16 +77,15 @@ public class drone_delivery {
         sc.out().contains("Drone added to warehouse."); // TODO ne tester les valeurs retournées que dans le then
     }
 
-    @Then("the system possesses new deliveries for each parcel received :")
-    public void the_system_possesses_new_deliveries_for_each_parcel_received(io.cucumber.datatable.DataTable dataTable) {
-        // Write code here that turns the phrase above into concrete actions
-        // For automatic transformation, change DataTable to one of
-        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-        // Double, Byte, Short, Long, BigInteger or BigDecimal.
-        //
-        // For other transformations you can register a DataTableType.
-        throw new io.cucumber.java.PendingException();
+    @Then("the system possesses new deliveries for each parcel received :") // TODO A delivery is created for every parcels gotten from the carrier
+    public void the_system_possesses_new_deliveries_for_each_parcel_received(DataTable dataTable) {
+        List<String> parcels = dataTable.asList();
+        StringBuilder s_parcel = new StringBuilder();
+        for (String s : parcels) {
+            s_parcel.append(s + "\n");
+        }
+        sc.out().equals("Drone added to warehouse.\n" + s_parcel + "Parcels updated");
+
     }
 
     @When("Clissandre schedules {string} a at {string}")
@@ -310,4 +316,8 @@ public class drone_delivery {
         throw new io.cucumber.java.PendingException();
     }
 
+    @And("a price of of {double} HT")
+    public void aPriceOfOfHT(int arg0, int arg1) {
+        throw new io.cucumber.java.PendingException();
+    }
 }

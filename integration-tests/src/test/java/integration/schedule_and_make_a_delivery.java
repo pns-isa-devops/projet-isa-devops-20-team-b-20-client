@@ -76,7 +76,7 @@ public class schedule_and_make_a_delivery {
         Command c = new Startdelivery();
         c.setShell(shellWarehouse);
         c.execute(Arrays.asList(parcelId));
-        sc.out().equals("Starting drone : 123456789A.\nDrone launched!");
+        sc.out().equals("Starting delivery : 123456789A.\nDrone 000 launched!");
         sc.restoreStreams();
     }
 

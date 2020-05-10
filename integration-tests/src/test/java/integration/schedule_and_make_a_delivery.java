@@ -19,8 +19,10 @@ import client.warehouse.framework.ShellWarehouse;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Ignore;
 import utils.StreamCatcher;
 
+@Ignore
 public class schedule_and_make_a_delivery {
 
     private StreamCatcher sc = new StreamCatcher();

@@ -3,8 +3,6 @@ Feature: All the process from adding drones to the warehouse to scheduling an or
   Background:
     Given a warehouse client
     And an office client
-    And the warehouse that received new parcels from carriers that indicated in an API what parcels have been delivered
-    And deliveries
     And a drone with ID "001" that flew 19 hours
 
   Scenario: Adding parcels, adding drones, scheduling deliveries, sending deliveries, charging and reviewing the drone,viewing statistics and viewing an invoice

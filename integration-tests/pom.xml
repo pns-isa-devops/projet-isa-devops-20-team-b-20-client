@@ -4,7 +4,7 @@
     <parent>
         <artifactId>projet-isa-devops-20-team-b-20-client</artifactId>
         <groupId>fr.unice.polytech.isadevops.client</groupId>
-        <version>3.0</version>
+        <version>3.1</version>
     </parent>
 
     <artifactId>integration-tests</artifactId>
@@ -15,17 +15,17 @@
         <dependency>
             <groupId>fr.unice.polytech.isadevops.client</groupId>
             <artifactId>projet-isa-devops-20-team-b-20-client-office</artifactId>
-            <version>3.0</version>
+            <version>3.1</version>
         </dependency>
         <dependency>
             <groupId>fr.unice.polytech.isadevops.client</groupId>
             <artifactId>projet-isa-devops-20-team-b-20-client-warehouse</artifactId>
-            <version>3.0</version>
+            <version>3.1</version>
         </dependency>
         <dependency>
             <groupId>fr.unice.polytech.isadevops.client</groupId>
             <artifactId>projet-isa-devops-20-team-b-20-client-utils</artifactId>
-            <version>3.0</version>
+            <version>3.1</version>
         </dependency>
     </dependencies>
 

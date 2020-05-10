@@ -5,7 +5,7 @@
     <groupId>fr.unice.polytech.isadevops.client</groupId>
     <artifactId>projet-isa-devops-20-team-b-20-client</artifactId>
     <packaging>pom</packaging>
-    <version>3.0</version>
+    <version>3.1</version>
 
 
     <modules>
@@ -98,7 +98,7 @@
                 <!-- default lifecycle, api packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>3.0.2</version>
+                    <version>3.1.2</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -110,7 +110,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.0.2</version>
+                    <version>3.1.2</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-install-plugin</artifactId>
@@ -127,7 +127,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-project-info-reports-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>3.1.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>

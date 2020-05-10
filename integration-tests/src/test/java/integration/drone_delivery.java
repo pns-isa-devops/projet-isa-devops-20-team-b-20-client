@@ -3,8 +3,7 @@ package integration;
 import client.office.api.AnalyticsAPI;
 import client.office.api.DeliveryScheduleAPI;
 import client.office.api.InvoiceAPI;
-import client.office.cli.commands.Getplanning;
-import client.office.cli.commands.Scheduledelivery;
+import client.office.cli.commands.*;
 import client.office.framework.ShellOffice;
 import client.utils.cli.commands.Command;
 import client.utils.cli.framework.Shell;
@@ -31,6 +30,7 @@ public class drone_delivery {
     Shell shellWarehouse;
     Command command;
     private StreamCatcher sc = new StreamCatcher();
+    private List<String> deliveryIDs = new ArrayList<>();
 
     public Shell getShell(boolean office) throws IllegalAccessException, InstantiationException {
         String host = System.getenv("HOST");
@@ -78,6 +78,7 @@ public class drone_delivery {
     @Then("the system possesses new deliveries for each parcel received :") // TODO A delivery is created for every parcels gotten from the carrier
     public void the_system_possesses_new_deliveries_for_each_parcel_received(DataTable dataTable) {
         List<String> parcels = dataTable.asList();
+        deliveryIDs = new ArrayList<>(parcels);
         StringBuilder s_parcel = new StringBuilder();
         for (String s : parcels) {
             s_parcel.append(s + "\n");
@@ -208,8 +209,10 @@ public class drone_delivery {
         command = new Startdelivery();
         command.setShell(shellWarehouse);
         command.execute(Collections.singletonList(string));
+        sc.out().notContains("not available").clean();
         Thread.sleep(5000);
         command.execute(Collections.singletonList(string3));
+        sc.out().notContains("not available").clean();
         Thread.sleep(5000);
         sc.out().clean();
     }
@@ -240,96 +243,102 @@ public class drone_delivery {
 
     @When("at 9h40 Marcel initiates a new delivery with the drone {string} that flew {int} hours and {int} minutes and the drone comes back")
     public void at_9h40_Marcel_initiates_a_new_delivery_with_the_drone_that_flew_hours_and_minutes_and_the_drone_comes_back(String string, Integer int2, Integer int3) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        command = new Startdelivery();
+        command.setShell(shellWarehouse);
+        command.execute(Collections.singletonList("123456789D"));
     }
 
     @Then("the drone has now {int} hours of flight")
     public void the_drone_has_now_hours_of_flight(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        //Nothing to do here, it is just a textual illustration of the situation
     }
 
     @When("Charlene retrieves it and brings it to Garfield for review")
     public void charlene_retrieves_it_and_brings_it_to_Garfield_for_review() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        command = new Setinreview();
+        command.setShell(shellWarehouse);
+        command.execute(Collections.singletonList("001"));
     }
 
     @When("Charlene tries to put the drone {string} in charge or in review while it is on review")
     public void charlene_tries_to_put_the_drone_in_charge_or_in_review_while_it_is_on_review(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        command = new Setinreview();
+        command.setShell(shellWarehouse);
+        command.execute(Collections.singletonList(string));
     }
 
-    @When("Garfield finished revising the drone and brings it to Marcel and Marcel puts it available")
-    public void garfield_finished_revising_the_drone_and_brings_it_to_Marcel_and_Marcel_puts_it_available() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @When("Garfield finished revising the drone {string} and brings it to Marcel and Marcel puts it available")
+    public void garfield_finished_revising_the_drone_and_brings_it_to_Marcel_and_Marcel_puts_it_available(String string) {
+        command = new Setavailable();
+        command.setShell(shellWarehouse);
+        command.execute(Collections.singletonList(string));
+        sc.out().contains("AVAILABLE").clean();
     }
 
     @When("Bob retrieves the occupation rate of the drone {string}")
     public void bob_retrieves_the_occupation_rate_of_the_drone(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        command = new Occupancy();
+        command.setShell(shellOffice);
+        command.execute(Collections.singletonList(string));
     }
 
-    @Then("he obtains an occupation rate of XX% as the drone flew {int} times, was {int} hours n review and was put one time in charge")
-    public void he_obtains_an_occupation_rate_of_XX_as_the_drone_flew_times_was_hours_n_review_and_was_put_one_time_in_charge(Integer int1, Integer int2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Then("he obtains an occupation rate of {string} % as the drone flew {int} times, was {int} hours in review and was put one time in charge")
+    public void he_obtains_an_occupation_rate_of_XX_as_the_drone_flew_times_was_hours_n_review_and_was_put_one_time_in_charge(String string, Integer int1, Integer int2) {
+        sc.out().contains(string).clean();
     }
 
     @Then("he obtains an occupation rate of {int}% as the drone never flew")
     public void he_obtains_an_occupation_rate_of_as_the_drone_never_flew(Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        sc.out().contains(int1.toString()).clean();
     }
 
     @When("Gisele asks the system to see the invoices at the end of the day")
     public void gisele_asks_the_system_to_see_the_invoices_at_the_end_of_the_day() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        command = new Getinvoices();
+        command.setShell(shellOffice);
+        command.execute(new ArrayList<>());
     }
 
-    @Then("she obtains the invoice containing the information of the carrier ....")
-    public void she_obtains_the_invoice_containing_the_information_of_the_carrier() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Then("she obtains the invoice containing the information of the carrier {string}")
+    public void she_obtains_the_invoice_containing_the_information_of_the_carrier(String string) {
+        sc.out().contains(string);
     }
 
-    @Then("every deliveries received in the morning with this carrier")
-    public void every_deliveries_received_in_the_morning_with_this_carrier() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Then("every deliveries received in the morning with this carrier {string}")
+    public void every_deliveries_received_in_the_morning_with_this_carrier(String string) {
+        sc.out().contains(string);
+        for (String s : deliveryIDs) {
+            sc.out().contains(s);
+        }
     }
 
-    @Then("a price of of {double} HT \\({int} {double} {int} * {int})")
-    public void a_price_of_of_HT(Double double1, Integer int1, Double double2, Integer int2, Integer int3) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    @Then("a price of {double} HT")
+    public void a_price_of_of_HT(Double double1) {
+        sc.contains("Price HT : " + double1);
     }
 
     @Then("a price of {double} TTC")
     public void a_price_of_TTC(Double double1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        sc.contains("Price TTC : " + double1);
     }
 
     @When("Gisele marks the invoice as paid")
     public void gisele_marks_the_invoice_as_paid() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        command = new Confirminvoicepayment();
+        command.setShell(shellOffice);
+        command.execute(new ArrayList<>());
     }
 
     @Then("the invoice is marked as paid")
     public void the_invoice_is_marked_as_paid() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        sc.out().contains("PAID");
     }
 
-    @And("a price of of {double} HT")
-    public void aPriceOfOfHT(int arg0, int arg1) {
-        throw new io.cucumber.java.PendingException();
+    @Then("the drone is back so Marcel put the drone {string} as available")
+    public void theDroneIsBackSoMarcelPutTheDroneAsAvailable(String arg0) {
+        command = new Setavailable();
+        command.setShell(shellWarehouse);
+        command.execute(Collections.singletonList(arg0));
+        sc.out().contains("AVAILABLE").clean();
     }
 }

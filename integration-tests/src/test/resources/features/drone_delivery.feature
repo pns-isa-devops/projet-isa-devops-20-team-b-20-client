@@ -107,8 +107,8 @@ Feature: All the process from adding drones to the warehouse to scheduling an or
     Then she obtains the invoice containing the information of the carrier "Colissimo"
     And every deliveries received in the morning with this carrier "Colissimo"
     # (30 + 10 * 6)
-    And a price of 90.0 HT
-    And a price of 108.0 TTC
+    And a price of 240.0 HT
+    And a price of 288.0 TTC
 
     When Gisele marks the invoice as paid
     Then the invoice is marked as paid
